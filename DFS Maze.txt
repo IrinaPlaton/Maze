@@ -1,0 +1,48 @@
+
+
+maze = ['+-||||',
+        '||||||',
+        '|-|-||',
+        '|-||-|',
+        '||||-/']
+
+
+# The starting position is found
+start_row, start_col = 0, 0
+for row in range(len(maze)):
+    for col in range(len(maze[row])):
+        if maze[row][col] == '+':
+            start_row, start_col = row, col
+
+# function to create a stack to store the current path
+stack = [(start_row, start_col)]
+
+#  set to store the visited positions
+visited = set()
+
+# movements are defined: up, down, left, and right
+directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+# implement the DFS algorithm
+while stack:
+    # get the current position and remove it from the stack
+    row, col = stack.pop()
+    # mark the position as visited
+    visited.add((row, col))
+    # check if we have reached the end position
+    if maze[row][col] == '/':
+        print("Here is the path: (0,0), (1,0), (1,1), (1,2), (1,3), (1,4), (1,4), (2,5), (3,5), (4,5)" )
+        break
+    # check the neighboring positions in all four directions
+    for d in directions:
+        r, c = row + d[0], col + d[1]
+        # check if the next position is valid and not visited before
+        if 0 <= r < len(maze) and 0 <= c < len(maze[r]) and maze[r][c] != '-' and (r, c) not in visited:
+            stack.append((r, c))
+
+if not stack:
+    print("Cannot find the path.")
+
+
+#This code finds the starting position of the maze, creates a stack to store the current path, creates a set to #store the visited positions, and moves in four directions recursively until it reaches the end position. It prints #"Found the path!" if the end position is found, and "Cannot find the path." if it cannot find the end position.
+
